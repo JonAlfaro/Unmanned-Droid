@@ -15,13 +15,12 @@ class VideoFeed(object):
         self.ret, self.full_frame = self.cap.read()
         self.frame = self.full_frame
 
-
     def __del__(self):
         self.cap.release()
         cv2.destroyAllWindows()
 
     def update(self, crop_check=False):
-        self.ret, self.full_frame = self.cap.read()  ##READ FRAME
+        self.ret, self.full_frame = self.cap.read()  # READ FRAME
         self.auto_crop()
         self.frame = self.full_frame
         if crop_check:
@@ -127,7 +126,7 @@ class HSVcv(object):
 
             surrounding_y = self.bound2frame(
                 [nth_y - s, nth_y - int(s * 0.75), nth_y - s, nth_y, nth_y + s, nth_y + int(s * 0.75), nth_y + s,
-                    nth_y], 'y')
+                 nth_y], 'y')
 
             surrounding_x = self.bound2frame(
                 [nth_x - s, nth_x, nth_x + s, nth_x + s, nth_x + s, nth_x, nth_x - s, nth_x - s], 'x')
@@ -201,11 +200,24 @@ class HSVcv(object):
 
 
 class PositionLogic(object):
-    def __init__(self, frame, left_roi_list, right_roi_list):
+    def __init__(self, ignore_range=0, fp_check1=0, fp_check2=0):
+        self.frame = None
+        self.left_roi_list = None
+        self.right_roi_list = None
+        self.frame_to_draw = None
+        self.middle_yx_list = None
+        self.roi_max_count = None
+        self.ignore_range = ignore_range
+        self.false_positive_range1= fp_check1
+        self.false_positive_range2 = fp_check2
+        self.false_positive_counter1 = 0
+        self.false_positive_counter2 = 0
+
+    def update(self, frame, left_roi_list, right_roi_list):
         self.left_roi_list = left_roi_list
         self.right_roi_list = right_roi_list
         self.frame = frame.copy()
-        self.frame_to_draw = frame.copy()
+        self.frame_to_draw = self.frame.copy()
         self.middle_yx_list = [[]]
         if len(left_roi_list) <= len(right_roi_list):
             self.roi_max_count = len(left_roi_list)
@@ -232,6 +244,10 @@ class PositionLogic(object):
                 continue
             self.middle_yx_list.append([middle_y, middle_x])
         self.middle_yx_list.pop(0)
+        if abs(self.false_positive_counter1) > self.false_positive_range1:
+            self.false_positive_counter1 = 0
+        if abs(self.false_positive_counter2) > self.false_positive_range2:
+            self.false_positive_counter2 = 0
 
     def draw_middle(self, h=0):
         middle_max = len(self.middle_yx_list) - 2
@@ -239,13 +255,13 @@ class PositionLogic(object):
         while middle_index < middle_max:
             y1 = int(self.middle_yx_list[middle_index][0] + h)
             x1 = int(self.middle_yx_list[middle_index][1])
-            y2 = int(self.middle_yx_list[middle_index+1][0] + h)
-            x2 = int(self.middle_yx_list[middle_index+1][1])
+            y2 = int(self.middle_yx_list[middle_index + 1][0] + h)
+            x2 = int(self.middle_yx_list[middle_index + 1][1])
             cv2.line(self.frame_to_draw, (x1, y1), (x2, y2), (255, 255, 0), 5)
             middle_index += 1
 
     def draw_lanes(self, h=0):
-        for lane_index in range(len(self.left_roi_list)-1):
+        for lane_index in range(len(self.left_roi_list) - 1):
             # Get positions for drawing left lane
             left_y1 = int(self.left_roi_list[lane_index][1] + h)
             left_x1 = self.left_roi_list[lane_index][2]
@@ -267,6 +283,46 @@ class PositionLogic(object):
             if self.right_roi_list[lane_index + 1][0] != 0:
                 cv2.line(self.frame_to_draw, (right_x1, right_y1), (right_x2, right_y2), (0, 0, 0), 5)
 
+    def show(self):
+        cv2.imshow('Drawn Lanes', self.frame_to_draw)
+
+    def calc_direction(self):
+        x_list = [x[1] for x in self.middle_yx_list]
+        average_x = average_list(x_list)
+        if average_x == 0:
+            return 0
+        else:
+            true_middle_x = self.frame.shape[1] / 2
+            dif_average_x = average_x - true_middle_x
+
+            # ignore dif_average_x that fall under +/- ignore_range
+            dif_average_x = self.ignore_check(int(dif_average_x))
+
+            # Check to see if one of the lanes is much more visible than then other (used to check if getting to close
+            # to lane)
+            total_left_lane_nonzero = np.sum(self.left_roi_list[:, 0])
+            total_right_lane_nonzero = np.sum(self.right_roi_list[:, 0])
+            if total_left_lane_nonzero > (total_right_lane_nonzero * 3):
+                dif_average_x += -total_left_lane_nonzero
+                self.false_positive_counter2 += -1
+            elif total_right_lane_nonzero > (total_left_lane_nonzero * 3):
+                dif_average_x += total_right_lane_nonzero
+                self.false_positive_counter2 += 1
+
+            # check for false positives and ignore
+            self.false_positive_counter1 += np.clip(dif_average_x, -1, 1)
+            if -self.false_positive_range1 < self.false_positive_counter1 < self.false_positive_range1:
+                if -self.false_positive_range2 < self.false_positive_counter2 < self.false_positive_range2:
+                    dif_average_x = 0
+
+            return dif_average_x
+
+    def ignore_check(self, dif_avg_x):
+        if -self.ignore_range <= dif_avg_x <= self.ignore_range:
+            return 0
+        else:
+            return dif_avg_x
+
 
 def rshift(seq, n=0):  # Rotational shift of array by n
     a = n % len(seq)
@@ -285,3 +341,9 @@ def find_nearest(array, value):
     array = np.asarray(array)
     idx = (np.abs(array - value)).argmin()
     return idx
+
+
+def average_list(array):
+    if len(array) == 0:
+        return 0
+    return sum(array)/len(array)
