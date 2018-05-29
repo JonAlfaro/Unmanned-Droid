@@ -11,7 +11,10 @@ while True:
         cv2.imshow('hsv', new_logic.hsv)
         new_logic.find_next()
         new_logic.black_fill_last_roi()
-        print('new median', new_logic.median_hsv)
+    pos_logic = PositionLogic(new_vid.full_frame, np.array(new_logic.roi_lists['LeftLane']), np.array(new_logic.roi_lists['RightLane']))
+    pos_logic.draw_middle(HEIGHT)
+    pos_logic.draw_lanes(HEIGHT)
+    cv2.imshow('pos_logic', pos_logic.frame_to_draw)
     new_vid.show()
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

@@ -12,34 +12,37 @@ SAMPLE_SIZE = 25
 class VideoFeed(object):
     def __init__(self, cam_select=0):
         self.cap = cv2.VideoCapture(cam_select)
-        self.ret, self.frame = self.cap.read()
+        self.ret, self.full_frame = self.cap.read()
+        self.frame = self.full_frame
+
 
     def __del__(self):
         self.cap.release()
         cv2.destroyAllWindows()
 
     def update(self, crop_check=False):
-        self.ret, self.frame = self.cap.read()  ##READ FRAME
+        self.ret, self.full_frame = self.cap.read()  ##READ FRAME
         self.auto_crop()
+        self.frame = self.full_frame
         if crop_check:
             self.crop()
 
     def auto_crop(self, threshold=0):
-        if len(self.frame.shape) == 3:
-            flat_image = np.max(self.frame, 2)
+        if len(self.full_frame.shape) == 3:
+            flat_image = np.max(self.full_frame, 2)
         else:
-            flat_image = self.frame
+            flat_image = self.full_frame
         assert len(flat_image.shape) == 2
 
         rows = np.where(np.max(flat_image, 0) > threshold)[0]
         if rows.size:
             cols = np.where(np.max(flat_image, 1) > threshold)[0]
-            crop = self.frame[cols[0]: cols[-1] + 1, rows[0]: rows[-1] + 1]
+            crop = self.full_frame[cols[0]: cols[-1] + 1, rows[0]: rows[-1] + 1]
         else:
-            crop = self.frame[:1, :1]
+            crop = self.full_frame[:1, :1]
 
         # Now crop the image, and save to frame
-        self.frame = crop.copy()
+        self.full_frame = crop.copy()
 
     def crop(self):
         x = self.frame.shape[1]
@@ -48,7 +51,7 @@ class VideoFeed(object):
 
     def show(self, name='feed', next_frame=True):
         if self.ret:
-            cv2.imshow(name, self.frame)
+            cv2.imshow(name, self.full_frame)
         if next_frame:
             self.update()
 
@@ -197,6 +200,74 @@ class HSVcv(object):
             cv2.rectangle(self.hsv, (x, y), (x + s, y + s), (0, 0, 0), -1)
 
 
+class PositionLogic(object):
+    def __init__(self, frame, left_roi_list, right_roi_list):
+        self.left_roi_list = left_roi_list
+        self.right_roi_list = right_roi_list
+        self.frame = frame.copy()
+        self.frame_to_draw = frame.copy()
+        self.middle_yx_list = [[]]
+        if len(left_roi_list) <= len(right_roi_list):
+            self.roi_max_count = len(left_roi_list)
+        else:
+            self.roi_max_count = len(right_roi_list)
+
+        for index in range(self.roi_max_count):
+            # Find closest roi's on y axis
+            nearest_y_index = find_nearest(self.left_roi_list[:, 1], self.right_roi_list[index][1])
+
+            # Find middle x position
+            middle_x = self.right_roi_list[index][2] - self.left_roi_list[nearest_y_index][2]
+            middle_x = self.left_roi_list[index][2] + (middle_x / 2)
+
+            # Find middle y position
+            if self.left_roi_list[index][1] > self.right_roi_list[index][1]:
+                middle_y = self.left_roi_list[index][1] - self.right_roi_list[index][1]
+                middle_y = self.right_roi_list[index][1] + middle_y
+            else:
+                middle_y = self.right_roi_list[index][1] - self.left_roi_list[index][1]
+                middle_y = self.left_roi_list[index][1] + middle_y
+
+            if middle_y == 0:
+                continue
+            self.middle_yx_list.append([middle_y, middle_x])
+        self.middle_yx_list.pop(0)
+
+    def draw_middle(self, h=0):
+        middle_max = len(self.middle_yx_list) - 2
+        middle_index = 0
+        while middle_index < middle_max:
+            y1 = int(self.middle_yx_list[middle_index][0] + h)
+            x1 = int(self.middle_yx_list[middle_index][1])
+            y2 = int(self.middle_yx_list[middle_index+1][0] + h)
+            x2 = int(self.middle_yx_list[middle_index+1][1])
+            cv2.line(self.frame_to_draw, (x1, y1), (x2, y2), (255, 255, 0), 5)
+            middle_index += 1
+
+    def draw_lanes(self, h=0):
+        for lane_index in range(len(self.left_roi_list)-1):
+            # Get positions for drawing left lane
+            left_y1 = int(self.left_roi_list[lane_index][1] + h)
+            left_x1 = self.left_roi_list[lane_index][2]
+            left_y2 = int(self.left_roi_list[lane_index + 1][1] + h)
+            left_x2 = self.left_roi_list[lane_index + 1][2]
+
+            # draw left lane
+            if self.left_roi_list[lane_index + 1][0] != 0:
+                cv2.line(self.frame_to_draw, (left_x1, left_y1), (left_x2, left_y2), (0, 0, 0), 5)
+
+        for lane_index in range(len(self.right_roi_list) - 1):
+            # Get positions for drawing right lane
+            right_y1 = int(self.right_roi_list[lane_index][1] + h)
+            right_x1 = self.right_roi_list[lane_index][2]
+            right_y2 = int(self.right_roi_list[lane_index + 1][1] + h)
+            right_x2 = self.right_roi_list[lane_index + 1][2]
+
+            # draw right lane
+            if self.right_roi_list[lane_index + 1][0] != 0:
+                cv2.line(self.frame_to_draw, (right_x1, right_y1), (right_x2, right_y2), (0, 0, 0), 5)
+
+
 def rshift(seq, n=0):  # Rotational shift of array by n
     a = n % len(seq)
     return seq[-a:] + seq[:-a]
@@ -209,3 +280,8 @@ def frame2roi(y, x, frame, median_hsv=None, size=SAMPLE_SIZE):
     else:
         return roi
 
+
+def find_nearest(array, value):
+    array = np.asarray(array)
+    idx = (np.abs(array - value)).argmin()
+    return idx
