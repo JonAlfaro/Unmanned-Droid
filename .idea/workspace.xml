@@ -10,15 +10,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Unmanned_Droid$main.coverage" NAME="main Coverage Results" MODIFIED="1527609023962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Unmanned_Droid$main.coverage" NAME="main Coverage Results" MODIFIED="1528118380371" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Unmanned_Droid$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1528103158154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="85">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -26,23 +27,66 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="droidcv.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/droidcv.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="10" lean-forward="true" selection-start-line="9" selection-end-line="10" />
+            <state relative-caret-position="113">
+              <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#284#1552#0" />
-                <element signature="e#1581#7978#0" />
-                <element signature="e#7506#7771#0" />
-                <element signature="e#9616#10068#0" />
-                <element signature="e#10126#11232#0" />
-                <element signature="e#11971#12091#0" />
-                <element signature="e#8532#8579#0" />
-                <element signature="e#8201#8367#0" />
-                <element signature="e#9430#9513#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Python/#C:/Users/j_alf/PycharmProjects/Unmanned Droid/droidcv.py" pinned="false" current-in-tab="false">
+        <entry file="uml://Python/#C:/Users/j_alf/PycharmProjects/Unmanned Droid/droidcv.py">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>Python</ID>
+              <OriginalElement>#C:/Users/j_alf/PycharmProjects/Unmanned Droid/droidcv.py</OriginalElement>
+              <nodes>
+                <node x="0.0" y="597.0">droidcv.HSVcv</node>
+                <node x="928.0" y="542.0">droidcv.PositionLogic</node>
+                <node x="643.0" y="0.0">object</node>
+                <node x="629.0" y="630.0">droidcv.VideoFeed</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="droidcv.VideoFeed" target="object">
+                  <point x="0.0" y="-125.0" />
+                  <point x="0.0" y="246.0" />
+                </edge>
+                <edge source="droidcv.PositionLogic" target="object">
+                  <point x="0.0" y="-213.0" />
+                  <point x="1108.0" y="517.0" />
+                  <point x="852.1666666666667" y="517.0" />
+                  <point x="83.66666666666674" y="246.0" />
+                </edge>
+                <edge source="droidcv.HSVcv" target="object">
+                  <point x="0.0" y="-158.0" />
+                  <point x="304.5" y="517.0" />
+                  <point x="684.8333333333333" y="517.0" />
+                  <point x="-83.66666666666669" y="246.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="1.0" x="357.0" y="353.0" />
+              <SelectedNodes>
+                <node>droidcv.VideoFeed</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Methods</Category>
+                <Category>Fields</Category>
+              </Categories>
             </state>
           </provider>
         </entry>
@@ -85,10 +129,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1416" />
+    <option name="x" value="-1854" />
+    <option name="y" value="54" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -96,7 +140,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -108,6 +151,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -128,7 +172,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="Unnamed" type="PythonConfigurationType" factoryName="Python">
+      <module name="Unmanned Droid" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\j_alf\PycharmProjects\Unmanned Droid\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Unmanned Droid" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -148,6 +211,10 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <list>
+      <item itemvalue="Python.Unnamed" />
+      <item itemvalue="Python.main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
@@ -168,30 +235,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <frame x="-1928" y="61" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3289777" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24726562" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="SciView" visible="true" weight="0.12578125" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32837406" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32943678" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.246875" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.12552084" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.42428902" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -202,7 +269,19 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="23" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/droidcv.py</url>
+          <line>147</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/droidcv.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="28" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -212,21 +291,87 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/droid.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
+        <state relative-caret-position="85">
+          <caret line="8" column="28" lean-forward="true" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#582#706#0" />
-            <element signature="e#755#1285#0" />
-            <element signature="e#1458#1571#0" />
-            <element signature="e#1631#1733#0" />
-            <element signature="e#2179#3724#0" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/droidcv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="29" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/droidcv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="126" column="22" selection-start-line="126" selection-start-column="22" selection-end-line="126" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="29" lean-forward="true" selection-start-line="8" selection-start-column="29" selection-end-line="8" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/droidcv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1428">
+          <caret line="126" column="22" selection-start-line="126" selection-start-column="22" selection-end-line="126" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/droidcv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="16" lean-forward="true" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/droid.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -241,10 +386,108 @@
         </state>
       </provider>
     </entry>
+    <entry file="uml://Python/droidcv.HSVcv">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>droidcv.HSVcv</OriginalElement>
+          <nodes>
+            <node x="" y="">droidcv.HSVcv</node>
+            <node x="" y="">object</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="54.5" y="54.0" />
+          <SelectedNodes />
+          <Categories />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/droidcv.VideoFeed">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>droidcv.VideoFeed</OriginalElement>
+          <nodes>
+            <node x="" y="">object</node>
+            <node x="" y="">droidcv.VideoFeed</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="65.0" y="54.0" />
+          <SelectedNodes />
+          <Categories />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#C:/Users/j_alf/PycharmProjects/Unmanned Droid/main.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>#C:/Users/j_alf/PycharmProjects/Unmanned Droid/main.py</OriginalElement>
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="602.5" y="444.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Methods</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://Python/#C:/Users/j_alf/PycharmProjects/Unmanned Droid/droidcv.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>#C:/Users/j_alf/PycharmProjects/Unmanned Droid/droidcv.py</OriginalElement>
+          <nodes>
+            <node x="0.0" y="597.0">droidcv.HSVcv</node>
+            <node x="928.0" y="542.0">droidcv.PositionLogic</node>
+            <node x="643.0" y="0.0">object</node>
+            <node x="629.0" y="630.0">droidcv.VideoFeed</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="droidcv.VideoFeed" target="object">
+              <point x="0.0" y="-125.0" />
+              <point x="0.0" y="246.0" />
+            </edge>
+            <edge source="droidcv.PositionLogic" target="object">
+              <point x="0.0" y="-213.0" />
+              <point x="1108.0" y="517.0" />
+              <point x="852.1666666666667" y="517.0" />
+              <point x="83.66666666666674" y="246.0" />
+            </edge>
+            <edge source="droidcv.HSVcv" target="object">
+              <point x="0.0" y="-158.0" />
+              <point x="304.5" y="517.0" />
+              <point x="684.8333333333333" y="517.0" />
+              <point x="-83.66666666666669" y="246.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="357.0" y="353.0" />
+          <SelectedNodes>
+            <node>droidcv.VideoFeed</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Methods</Category>
+            <Category>Fields</Category>
+          </Categories>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="23" lean-forward="true" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
@@ -253,19 +496,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/droidcv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" lean-forward="true" selection-start-line="9" selection-end-line="10" />
+        <state relative-caret-position="113">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#284#1552#0" />
-            <element signature="e#1581#7978#0" />
-            <element signature="e#7506#7771#0" />
-            <element signature="e#9616#10068#0" />
-            <element signature="e#10126#11232#0" />
-            <element signature="e#11971#12091#0" />
-            <element signature="e#8532#8579#0" />
-            <element signature="e#8201#8367#0" />
-            <element signature="e#9430#9513#0" />
           </folding>
         </state>
       </provider>

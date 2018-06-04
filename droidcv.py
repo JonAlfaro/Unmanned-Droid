@@ -5,6 +5,8 @@ BLUE_MIN = np.array([90, 80, 0], np.uint8)
 BLUE_MAX = np.array([110, 255, 255], np.uint8)
 YELLOW_MIN = np.array([20, 150, 100], np.uint8)
 YELLOW_MAX = np.array([40, 255, 255], np.uint8)
+RED_MIN = np.array([170, 190, 150], np.uint8)
+RED_MAX = np.array([190, 255, 255], np.uint8)
 HEIGHT = 200  # px
 SAMPLE_SIZE = 25
 
@@ -110,12 +112,44 @@ class HSVcv(object):
                 pos_yx[1][2] = x
 
             x += s
-
         return pos_yx.copy()
+
+    def avoid_obstacle(self, avoid_threshold_min, avoid_threshold_max, sample_select_index=0, s=SAMPLE_SIZE):
+        left_sample_select_x = self.roi_lists['LeftLane'][sample_select_index][2]
+        right_sample_select_x = self.roi_lists['RightLane'][sample_select_index][2]
+        sample_select_y = self.roi_lists['LeftLane'][sample_select_index][1]
+        x = left_sample_select_x
+        max_nonzero_count = 0
+        max_nonzero_x = left_sample_select_x
+        hsv_threshold = [avoid_threshold_min.copy(), avoid_threshold_max.copy()]
+
+        while left_sample_select_x <= x <= right_sample_select_x:
+            selected_sample = frame2roi(sample_select_y, x, self.hsv, hsv_threshold, s)
+            sample_select_nonzero_count = cv2.countNonZero(selected_sample)
+            if sample_select_nonzero_count > max_nonzero_count:
+                max_nonzero_count = sample_select_nonzero_count
+                max_nonzero_x = x
+            x += s
+
+        print('l', abs(max_nonzero_x - left_sample_select_x))
+        print('r', abs(max_nonzero_x - right_sample_select_x))
+        if abs(max_nonzero_x - left_sample_select_x) < abs(max_nonzero_x - right_sample_select_x):
+            selected_lane = 'LeftLane'
+            unselected_lane = 'RightLane'
+        else:
+            selected_lane = 'RightLane'
+            unselected_lane = 'LeftLane'
+
+        if max_nonzero_count > 3:
+            for index in range(len(self.roi_lists[selected_lane])):
+                del self.roi_lists[selected_lane][-1]
+            y = self.roi_lists[unselected_lane][0][1]
+            while y >= 0:
+                self.roi_lists[selected_lane].append([0, y, max_nonzero_x, -1])
+                y -= SAMPLE_SIZE
 
     # Finds the next two regions of interest (next point on both lanes) and add to roi_list, can disable second lane
     def find_next(self, double_lane=True, s=SAMPLE_SIZE):
-
         for lane in self.roi_lists:
             nth_roi = self.roi_lists[lane][-1]
             if nth_roi == [0, 0, 0, 0]:
@@ -135,7 +169,7 @@ class HSVcv(object):
             next_roi, segment_weight = [0] * 4, [1] * 8
             nth_segment = nth_roi[3]
             if nth_segment >= 0:
-                segment_weight = rshift([1, 0.9, 0.7, 0, 0, 0.2, 0, 0.9], nth_segment)
+                segment_weight = rshift([1, 0.9, 0.7, 0.2, 0, 0.2, 0.7, 0.9], nth_segment)
 
             # disable positions 7 6 5 ( negative y segments)
             neg_y_disable = 0
@@ -200,7 +234,7 @@ class HSVcv(object):
 
 
 class PositionLogic(object):
-    def __init__(self, ignore_range=0, fp_check1=0, fp_check2=0):
+    def __init__(self, ignore_range=0, fp_check1=0, fp_check2=0, ):
         self.frame = None
         self.left_roi_list = None
         self.right_roi_list = None
@@ -244,10 +278,6 @@ class PositionLogic(object):
                 continue
             self.middle_yx_list.append([middle_y, middle_x])
         self.middle_yx_list.pop(0)
-        if abs(self.false_positive_counter1) > self.false_positive_range1:
-            self.false_positive_counter1 = 0
-        if abs(self.false_positive_counter2) > self.false_positive_range2:
-            self.false_positive_counter2 = 0
 
     def draw_middle(self, h=0):
         middle_max = len(self.middle_yx_list) - 2
@@ -314,9 +344,13 @@ class PositionLogic(object):
             if -self.false_positive_range1 < self.false_positive_counter1 < self.false_positive_range1:
                 if -self.false_positive_range2 < self.false_positive_counter2 < self.false_positive_range2:
                     dif_average_x = 0
+            if abs(self.false_positive_counter1) > self.false_positive_range1:
+                self.false_positive_counter1 = 0
+            if abs(self.false_positive_counter2) > self.false_positive_range2:
+                self.false_positive_counter2 = 0
+            return int(dif_average_x)
 
-            return dif_average_x
-
+    # ignore check to check against init dead zone
     def ignore_check(self, dif_avg_x):
         if -self.ignore_range <= dif_avg_x <= self.ignore_range:
             return 0
